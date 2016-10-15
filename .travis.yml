@@ -1,0 +1,22 @@
+language: python
+python:
+    - "2.6"
+    - "2.7"
+    - "3.3"
+    - "3.4"
+    - "3.5"
+    - "3.5-dev" # 3.5 development branch
+    - "3.6-dev" # 3.6 development branch
+    - "nightly" # currently points to 3.7-dev
+before_install:
+    - pip install -r requirements.txt
+install:
+    - pip install coveralls codeclimate-test-reporter
+    - python setup.py install
+script:
+    - nosetests -v
+    - coverage run --source=hijricalendar setup.py test
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
+    - coveralls
+    - CODECLIMATE_REPO_TOKEN=3998762dd22daa347cbf60227464e47c0e9fbbdd097cccd3a8e225a4bfb6f5c7 codeclimate-test-reporter
